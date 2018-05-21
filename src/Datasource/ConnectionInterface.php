@@ -14,18 +14,11 @@
  */
 namespace Cake\Datasource;
 
+use Cake\Database\Schema\Collection;
+
 /**
  * This interface defines the methods you can depend on in
  * a connection.
- *
- * @method object getLogger() Get the current logger instance
- * @method $this setLogger($logger) Set the current logger.
- * @method bool supportsDynamicConstraints()
- * @method \Cake\Database\Schema\Collection getSchemaCollection()
- * @method \Cake\Database\Query newQuery()
- * @method \Cake\Database\StatementInterface prepare($sql)
- * @method \Cake\Database\StatementInterface execute($query, $params = [], array $types = [])
- * @method string quote($value, $type = null)
  */
 interface ConnectionInterface
 {
@@ -79,4 +72,68 @@ interface ConnectionInterface
      * @return bool
      */
     public function logQueries($enable = null);
+
+    /**
+     * Sets a logger
+     *
+     * @param \Cake\Database\Log\QueryLogger $logger Logger object
+     * @return $this
+     */
+    public function setLogger($logger);
+
+    /**
+     * Gets the logger object
+     *
+     * @return \Cake\Database\Log\QueryLogger logger instance
+     */
+    public function getLogger();
+
+    /**
+     * Returns whether the driver supports adding or dropping constraints
+     * to already created tables.
+     *
+     * @return bool True if driver supports dynamic constraints.
+     */
+    public function supportsDynamicConstraints();
+
+    /**
+     * Gets a Schema\Collection object for this connection.
+     *
+     * @return \Cake\Database\Schema\Collection
+     */
+    public function getSchemaCollection();
+
+    /**
+     * Sets a Schema\Collection object for this connection.
+     *
+     * @param \Cake\Database\Schema\Collection $collection The schema collection object
+     * @return $this
+     */
+    public function setSchemaCollection(Collection $collection);
+
+    /**
+     * Create a new Query instance for this connection.
+     *
+     * @return \Cake\Database\Query
+     */
+    public function newQuery();
+
+    /**
+     * Prepares a SQL statement to be executed.
+     *
+     * @param string|\Cake\Database\Query $sql The SQL to convert into a prepared statement.
+     * @return \Cake\Database\StatementInterface
+     */
+    public function prepare($sql);
+
+    /**
+     * Executes a query using $params for interpolating values and $types as a hint for each
+     * those params.
+     *
+     * @param string $query SQL to be executed and interpolated with $params
+     * @param array $params list or associative array of params to be interpolated in $query as values
+     * @param array $types list or associative array of types to be used for casting values in query
+     * @return \Cake\Database\StatementInterface executed statement
+     */
+    public function execute($query, array $params = [], array $types = []);
 }
