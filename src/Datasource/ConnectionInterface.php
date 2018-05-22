@@ -112,13 +112,6 @@ interface ConnectionInterface
     public function setSchemaCollection(Collection $collection);
 
     /**
-     * Create a new Query instance for this connection.
-     *
-     * @return \Cake\Database\Query
-     */
-    public function newQuery();
-
-    /**
      * Prepares a SQL statement to be executed.
      *
      * @param string|\Cake\Database\Query $sql The SQL to convert into a prepared statement.
